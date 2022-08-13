@@ -1,14 +1,48 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-import { Layout } from "components/layout";
+import "@rainbow-me/rainbowkit/styles.css";
+
+import {
+	connectorsForWallets,
+	getDefaultWallets,
+	RainbowKitProvider,
+	wallet,
+} from "@rainbow-me/rainbowkit";
+import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+
+import { Layout } from "components/Layout";
+
+const { chains, provider } = configureChains(
+	[chain.hardhat],
+	[alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
+);
+
+const connectors = connectorsForWallets([
+	{
+		groupName: "Recommended",
+		wallets: [wallet.metaMask({ chains })],
+	},
+]);
+
+const wagmiClient = createClient({
+	autoConnect: true,
+	connectors,
+	provider,
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<ChakraProvider>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
-		</ChakraProvider>
+		<WagmiConfig client={wagmiClient}>
+			<RainbowKitProvider chains={chains}>
+				<ChakraProvider>
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+				</ChakraProvider>
+			</RainbowKitProvider>
+		</WagmiConfig>
 	);
 }
 

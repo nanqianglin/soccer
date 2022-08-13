@@ -8,8 +8,9 @@ import {
 	LinkBox,
 	LinkOverlay,
 } from "@chakra-ui/react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-const siteTitle = "DAPP";
+const siteTitle = "SOCCER";
 export default function Header() {
 	return (
 		<Flex
@@ -26,7 +27,7 @@ export default function Header() {
 				</NextLink>
 			</LinkBox>
 			<Spacer />
-			<Button>Button for Account </Button>
+			<ConnectButton />
 		</Flex>
 	);
 }
