@@ -1,23 +1,18 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { VStack, Heading, Box } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/react";
 import { useAccount } from "wagmi";
 
 import useGambleList from "hooks/useGambleList";
-import useCreateGamble from "hooks/useCreateGamble";
 import GameItems from "components/GameItems";
 import Loading from "components/Loading";
+import React from "react";
+import CreateGameButton from "components/CreateGame/CreateGameButton";
 
 const Home: NextPage = () => {
 	const { address } = useAccount();
 
 	const { data, isLoading } = useGambleList();
-	const createGambleMutation = useCreateGamble();
-
-	const createGamble = async () => {
-		createGambleMutation.mutate();
-	};
 
 	return (
 		<>
@@ -29,9 +24,7 @@ const Home: NextPage = () => {
 				Soccer Prizes List
 			</Heading>
 			<Box mb={4}>
-				<Button colorScheme='purple' onClick={createGamble}>
-					Create a prize
-				</Button>
+				<CreateGameButton />
 			</Box>
 			{isLoading && <Loading />}
 			<VStack>

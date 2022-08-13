@@ -12,6 +12,7 @@ const Home: NextPage = () => {
 	const id = Number(router.query?.id ?? 0);
 
 	const { data, isLoading } = useGambleDetails(id);
+	console.log(isLoading, "isLoading");
 
 	return (
 		<>
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
 				Soccer Prizes Details
 			</Heading>
 			{isLoading && <Loading />}
-			{data && <GameDetails data={data} />}
+			{!isLoading && data && <GameDetails data={data} />}
 		</>
 	);
 };

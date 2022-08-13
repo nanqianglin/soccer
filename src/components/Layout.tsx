@@ -16,12 +16,12 @@ export function Layout(props: Props) {
 	return (
 		<div>
 			<Header />
-			<Container maxW='container.md' py='8'>
+			<Container maxW='container.md' pt='8' pb='80px'>
 				{props.children}
 			</Container>
 			<Center
 				as='footer'
-				position='fixed'
+				// position='fixed'
 				width='100%'
 				bottom='0px'
 				bg={useColorModeValue("gray.100", "gray.700")}
