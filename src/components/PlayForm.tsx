@@ -8,9 +8,13 @@ import {
 	RadioGroup,
 	VStack,
 	Text,
+	useToast,
 } from "@chakra-ui/react";
-import { Form, Field, Formik, FieldProps } from "formik";
+import { Field, Formik, FieldProps, FormikHelpers } from "formik";
+import usePlayGamble from "hooks/usePlayGamble";
 import React from "react";
+
+import useEventListener from "hooks/useEventListener";
 
 interface Props {
 	id: number;
@@ -24,24 +28,41 @@ interface Values {
 }
 
 const PlayForm = ({ id, gameInfo }: Props) => {
+	const { isLoading, isSuccess, mutate } = usePlayGamble();
+
+	const ref = React.useRef<any>(null);
+
+	const toast = useToast();
+	useEventListener("PlayGamble", () => {
+		toast({
+			title: "Congratulations!",
+			description: "You have play the game successfully!",
+			status: "success",
+			duration: 3000,
+			isClosable: true,
+			position: "top",
+		});
+		// resetForm
+		ref?.current?.();
+	});
+
 	const options = gameInfo.options.map((item: string, index: number) => ({
 		key: index,
 		label: item,
 		value: String(index),
 	}));
 
-	console.log(id);
+	const handlePlay = (values: Values, actions: FormikHelpers<Values>) => {
+		mutate({
+			id,
+			amount: String(values.amount),
+			option: values.option,
+		});
+		ref.current = actions.resetForm;
+	};
 
 	return (
-		<Formik
-			initialValues={{ amount: "", option: "" }}
-			onSubmit={(values: Values, actions) => {
-				setTimeout(() => {
-					console.log(values);
-					actions.setSubmitting(false);
-				}, 1000);
-			}}
-		>
+		<Formik initialValues={{ amount: "", option: "" }} onSubmit={handlePlay}>
 			{({ handleSubmit, errors, touched, isSubmitting }) => (
 				<form onSubmit={handleSubmit}>
 					<VStack spacing={4} align='flex-start'>
@@ -56,6 +77,10 @@ const PlayForm = ({ id, gameInfo }: Props) => {
 									let error;
 									if (!value) {
 										error = "Required";
+									} else {
+										if (!Number.isInteger(value)) {
+											error = "Must be integer";
+										}
 									}
 									return error;
 								}}
@@ -103,7 +128,7 @@ const PlayForm = ({ id, gameInfo }: Props) => {
 							{gameInfo.rate.rateB.toString()} ]
 						</Text>
 
-						<Button type='submit' colorScheme='purple' isLoading={isSubmitting}>
+						<Button type='submit' colorScheme='purple' isLoading={isLoading}>
 							Play game
 						</Button>
 					</VStack>

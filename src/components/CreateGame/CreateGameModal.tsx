@@ -59,7 +59,7 @@ const CreateGameModal = ({ initialRef, finalRef, isOpen, onClose }: Props) => {
 		isSuccess && onClose();
 	}, [isSuccess, onClose]);
 
-	const handleSub = (values: Values, actions: FormikHelpers<Values>) => {
+	const handleCreate = (values: Values) => {
 		mutate({
 			title: values.title,
 			description: values.description,
@@ -88,7 +88,7 @@ const CreateGameModal = ({ initialRef, finalRef, isOpen, onClose }: Props) => {
 			<ModalContent>
 				<ModalHeader>Create a new soccer prize</ModalHeader>
 				<ModalCloseButton />
-				<Formik initialValues={initialValues} onSubmit={handleSub}>
+				<Formik initialValues={initialValues} onSubmit={handleCreate}>
 					{({ handleSubmit, errors, touched, isSubmitting, setFieldValue }) => (
 						<form onSubmit={handleSubmit}>
 							<ModalBody pb={6}>
