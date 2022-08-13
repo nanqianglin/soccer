@@ -5,12 +5,15 @@ import useContractInstance from "./useContractInstance";
 export default function useGambleDetails(id: number) {
   const contract = useContractInstance();
 
-  async function getDetails() {
+  async function getDetails({ queryKey }: {
+    queryKey: [string, number]
+  }) {
+    const [, _id] = queryKey
     if (!contract) return;
-    return await contract.gambleList(id)
+    return await contract.gambleList(_id)
   }
 
-  const result = useQuery(["getDetails"], getDetails)
+  const result = useQuery(["getDetails", id], getDetails)
 
   return {
     ...result

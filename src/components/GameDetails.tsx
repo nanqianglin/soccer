@@ -29,6 +29,9 @@ const GameDetails = ({ data }: Props) => {
 			</Text>
 			<Box mt={10}>
 				<PlayForm id={data.id.toNumber()} gameInfo={gameInfo} />
+				{/* Expired status */}
+				{/* Finished status */}
+				{/* Revealed status */}
 				{/* Reveal Button */}
 				{/* Approve Button */}
 				{/* Reject Button */}

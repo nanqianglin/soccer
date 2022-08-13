@@ -47,6 +47,14 @@ const wagmiClient = createClient({
 	provider,
 });
 
+// const queryClient = new QueryClient({
+// 	defaultOptions: {
+// 		queries: {
+// 			refetchOnWindowFocus: false,
+// 		},
+// 	},
+// });
+
 function MyApp({ Component, pageProps }: AppProps) {
 	const [queryClient] = useState(
 		() =>
@@ -54,6 +62,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 				defaultOptions: {
 					queries: {
 						refetchOnWindowFocus: false,
+						// cacheTime: 0,
 					},
 				},
 			})

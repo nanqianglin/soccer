@@ -4,17 +4,10 @@ import {
 	Input,
 	FormErrorMessage,
 	Button,
-	HStack,
 	Radio,
 	RadioGroup,
-	Box,
-	NumberDecrementStepper,
-	NumberIncrementStepper,
-	NumberInput,
-	NumberInputField,
-	NumberInputStepper,
 	VStack,
-	Checkbox,
+	Text,
 } from "@chakra-ui/react";
 import { Form, Field, Formik, FieldProps } from "formik";
 import React from "react";
@@ -105,6 +98,10 @@ const PlayForm = ({ id, gameInfo }: Props) => {
 								);
 							}}
 						</Field>
+						<Text>
+							This game odds is [{gameInfo.rate.rateA.toString()} :{" "}
+							{gameInfo.rate.rateB.toString()} ]
+						</Text>
 
 						<Button type='submit' colorScheme='purple' isLoading={isSubmitting}>
 							Play game

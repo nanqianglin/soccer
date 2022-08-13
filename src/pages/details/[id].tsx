@@ -12,7 +12,6 @@ const Home: NextPage = () => {
 	const id = Number(router.query?.id ?? 0);
 
 	const { data, isLoading } = useGambleDetails(id);
-	console.log(isLoading, "isLoading");
 
 	return (
 		<>
