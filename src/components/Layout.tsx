@@ -1,5 +1,11 @@
 import React, { ReactNode } from "react";
-import { Text, Center, Container, useColorModeValue } from "@chakra-ui/react";
+import {
+	Text,
+	Center,
+	Container,
+	useColorModeValue,
+	Box,
+} from "@chakra-ui/react";
 import Header from "./Header";
 
 type Props = {
@@ -13,8 +19,16 @@ export function Layout(props: Props) {
 			<Container maxW='container.md' py='8'>
 				{props.children}
 			</Container>
-			<Center as='footer' bg={useColorModeValue("gray.100", "gray.700")} p={6}>
-				<Text fontSize='md'>nanqiang dapp - 2022</Text>
+			<Center
+				as='footer'
+				position='fixed'
+				width='100%'
+				bottom='0px'
+				bg={useColorModeValue("gray.100", "gray.700")}
+			>
+				<Box p={6}>
+					<Text fontSize='md'>nanqiang dapp - 2022</Text>
+				</Box>
 			</Center>
 		</div>
 	);

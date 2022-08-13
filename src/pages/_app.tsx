@@ -13,9 +13,24 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 import { Layout } from "components/Layout";
+import {
+	Hydrate,
+	QueryClient,
+	QueryClientProvider,
+} from "@tanstack/react-query";
+import { useState } from "react";
+
+const customChain = {
+	...chain.hardhat,
+	nativeCurrency: {
+		decimals: 18,
+		name: "Cronos",
+		symbol: "CRO",
+	},
+};
 
 const { chains, provider } = configureChains(
-	[chain.hardhat],
+	[customChain],
 	[alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
 );
 
@@ -33,16 +48,29 @@ const wagmiClient = createClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+	const [queryClient] = useState(
+		() =>
+			new QueryClient({
+				defaultOptions: {
+					queries: {
+						refetchOnWindowFocus: false,
+					},
+				},
+			})
+	);
+
 	return (
-		<WagmiConfig client={wagmiClient}>
-			<RainbowKitProvider chains={chains}>
-				<ChakraProvider>
-					<Layout>
-						<Component {...pageProps} />
-					</Layout>
-				</ChakraProvider>
-			</RainbowKitProvider>
-		</WagmiConfig>
+		<QueryClientProvider client={queryClient}>
+			<WagmiConfig client={wagmiClient}>
+				<RainbowKitProvider chains={chains}>
+					<ChakraProvider>
+						<Layout>
+							<Component {...pageProps} />
+						</Layout>
+					</ChakraProvider>
+				</RainbowKitProvider>
+			</WagmiConfig>
+		</QueryClientProvider>
 	);
 }
 
