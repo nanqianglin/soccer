@@ -18,6 +18,7 @@ import moment from "moment";
 import React, { useCallback } from "react";
 import { useAccount, useBlockNumber } from "wagmi";
 import ApproveOrReject from "./ApproveOrReject";
+import FinishOrPunish from "./FinishOrPunish";
 import PlayForm from "./PlayForm";
 import RevealForm from "./RevealGame/RevealForm";
 
@@ -115,42 +116,19 @@ const GameDetails = ({ data }: Props) => {
 				</Box>
 			);
 		}
-		// can punish
-		if (shouldPunish) {
+		// can punish or finish
+		if (shouldPunish || canFinish) {
 			return (
-				<Box mt={4}>
-					<Box mt={6}>
-						And the correct answer is{" "}
-						<Text color='red' fontWeight='bold'>
-							{correctAnswer !== undefined ? options[correctAnswer].label : ""}
-						</Text>
-					</Box>
-					<Text fontSize='small' my={2}>
-						This game is dishonest, as it got some rejecters. Please punish
-						he/she, thank you!
-					</Text>
-					<Button colorScheme='red'>Punish the game owner</Button>
-				</Box>
+				<FinishOrPunish
+					id={data.id}
+					shouldPunish={shouldPunish}
+					correctAnswer={
+						correctAnswer !== undefined ? options[correctAnswer].label : ""
+					}
+				/>
 			);
 		}
-		// can finish
-		if (canFinish) {
-			return (
-				<Box mt={4}>
-					<Box mt={6}>
-						And the correct answer is{" "}
-						<Text color='red' fontWeight='bold'>
-							{correctAnswer !== undefined ? options[correctAnswer].label : ""}
-						</Text>
-					</Box>
-					<Text fontSize='small' my={2}>
-						This game can be finish, as it got enough approvers. Please finish
-						it, thank you!
-					</Text>
-					<Button colorScheme='purple'>Finish the game</Button>
-				</Box>
-			);
-		}
+
 		// can approve
 		if (isRevealed && !isFinished) {
 			return (
