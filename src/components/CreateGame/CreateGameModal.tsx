@@ -39,6 +39,7 @@ interface Values {
 
 const CreateGameModal = ({ initialRef, finalRef, isOpen, onClose }: Props) => {
 	const start = new Date();
+	start.setDate(start.getDate() + 1);
 	start.setHours(0, 0, 0, 0);
 	const [date, setDate] = useState(start);
 

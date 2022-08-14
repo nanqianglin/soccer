@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 
 import useContractInstance from "./useContractInstance";
 
-export default function useGameExtraInfo(id: BigNumber) {
+export default function useGameExtraInfo(id: BigNumber, address?: string) {
   const contract = useContractInstance();
 
   async function getApprovers() {
@@ -25,12 +25,22 @@ export default function useGameExtraInfo(id: BigNumber) {
     return await contract.correctAnswers(_id)
   }
 
-  const [approversData, quorumData, rejectQuorumData, correctAnswersData] = useQueries({
+  async function getIsApprovedOrRejected({ queryKey }: {
+    queryKey: [string, BigNumber, string | undefined]
+  }) {
+    const [, _id, _address] = queryKey
+    if (!contract) return;
+    if (!_address) return;
+    return await contract.isApprovedOrRejected(_id, _address);
+  }
+
+  const [approversData, quorumData, rejectQuorumData, correctAnswersData, isApprovedOrRejectedData] = useQueries({
     queries: [
       { queryKey: ['getApprovers'], queryFn: getApprovers },
       { queryKey: ['getQuorum'], queryFn: getQuorum },
       { queryKey: ['getRejectQuorum'], queryFn: getRejectQuorum },
       { queryKey: ['getCorrectAnswer', id], queryFn: getCorrectAnswer },
+      { queryKey: ['getIsApprovedOrRejected', id, address], queryFn: getIsApprovedOrRejected },
     ]
   })
 
@@ -39,9 +49,11 @@ export default function useGameExtraInfo(id: BigNumber) {
     ...quorumData,
     ...rejectQuorumData,
     ...correctAnswersData,
+    ...isApprovedOrRejectedData,
     approvers: approversData.data,
     quorum: quorumData.data,
     rejectQuorum: rejectQuorumData.data,
     correctAnswer: correctAnswersData.data,
+    isApprovedOrRejected: isApprovedOrRejectedData.data,
   };
 }

@@ -17,6 +17,7 @@ import useGameExtraInfo from "hooks/useGameExtraInfo";
 import moment from "moment";
 import React from "react";
 import { useAccount, useBlockNumber } from "wagmi";
+import ApproveOrReject from "./ApproveOrReject";
 import PlayForm from "./PlayForm";
 import RevealForm from "./RevealGame/RevealForm";
 
@@ -42,8 +43,14 @@ const GameDetails = ({ data }: Props) => {
 	const isFinished = gameStatus.isFinished;
 	const isOwner = gameInfo.owner === address;
 
-	const { isLoading, approvers, quorum, rejectQuorum, correctAnswer } =
-		useGameExtraInfo(data.id);
+	const {
+		isLoading,
+		approvers,
+		quorum,
+		rejectQuorum,
+		correctAnswer,
+		isApprovedOrRejected,
+	} = useGameExtraInfo(data.id, address);
 
 	// get data from the contract
 	const isApprover = approvers?.includes(address);
@@ -114,10 +121,10 @@ const GameDetails = ({ data }: Props) => {
 						{/* Approve Button */}
 						{/* Reject Button */}
 						{isApprover && (
-							<>
-								<Button colorScheme='purple'>Approve the game</Button>
-								<Button colorScheme='red'>Reject the game</Button>
-							</>
+							<ApproveOrReject
+								id={data.id}
+								isApprovedOrRejected={Boolean(isApprovedOrRejected)}
+							/>
 						)}
 					</Box>
 				)}
