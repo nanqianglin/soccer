@@ -8,7 +8,13 @@ import {
 	RainbowKitProvider,
 	wallet,
 } from "@rainbow-me/rainbowkit";
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import {
+	Chain,
+	chain,
+	configureChains,
+	createClient,
+	WagmiConfig,
+} from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
@@ -20,8 +26,14 @@ import {
 } from "@tanstack/react-query";
 import { useState } from "react";
 
-const customChain = {
+const customChain: Chain = {
 	...chain.hardhat,
+	// id: 338,
+	// name: "Cronos Testnet",
+	// network: "Cronos Testnet",
+	// rpcUrls: {
+	// 	default: "https://evm-t3.cronos.org",
+	// },
 	nativeCurrency: {
 		decimals: 18,
 		name: "Cronos",
@@ -29,10 +41,7 @@ const customChain = {
 	},
 };
 
-const { chains, provider } = configureChains(
-	[customChain],
-	[alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
-);
+const { chains, provider } = configureChains([customChain], [publicProvider()]);
 
 const connectors = connectorsForWallets([
 	{

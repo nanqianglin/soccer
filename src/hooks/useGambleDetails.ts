@@ -8,8 +8,8 @@ export default function useGambleDetails(id: number) {
   async function getDetails({ queryKey }: {
     queryKey: [string, number]
   }) {
-    const [, _id] = queryKey
     if (!contract) return;
+    const [, _id] = queryKey
     return await contract.gambleList(_id)
   }
 
