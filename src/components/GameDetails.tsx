@@ -18,7 +18,7 @@ import moment from "moment";
 import React from "react";
 import { useAccount, useBlockNumber } from "wagmi";
 import PlayForm from "./PlayForm";
-import RevealGameButton from "./RevealGame/RevealGameButton";
+import RevealForm from "./RevealGame/RevealForm";
 
 interface Props {
 	data: any;
@@ -56,8 +56,8 @@ const GameDetails = ({ data }: Props) => {
 			<Text fontSize='lg' mt={4}>
 				{gameInfo.description}
 			</Text>
-			{(isExpired || isFinished || isRevealed) && (
-				<RadioGroup mt={6}>
+			{(isExpired || isFinished) && (!isOwner || isRevealed) && (
+				<RadioGroup mt={10}>
 					{options.map((item: any) => (
 						<Radio
 							key={item.key}
@@ -83,11 +83,11 @@ const GameDetails = ({ data }: Props) => {
 					</Alert>
 				)}
 				{/* Expired status */}
-				{isExpired && (
+				{isExpired && !isRevealed && (
 					<Box mt={4}>
 						{/* Reveal Button */}
 						{isOwner ? (
-							<RevealGameButton />
+							<RevealForm id={data.id} gameInfo={gameInfo} />
 						) : (
 							<Alert status='warning'>
 								<AlertIcon />
@@ -101,9 +101,16 @@ const GameDetails = ({ data }: Props) => {
 					<Box mt={4}>
 						<Alert status='warning'>
 							<AlertIcon />
-							This game is revealed and waiting for approval. And the correct
-							answer is {correctAnswer}
+							This game is revealed and waiting for approval.
 						</Alert>
+						<Box mt={6}>
+							And the correct answer is{" "}
+							<Text color='red' fontWeight='bold'>
+								{correctAnswer !== undefined
+									? options[correctAnswer].label
+									: ""}
+							</Text>
+						</Box>
 						{/* Approve Button */}
 						{/* Reject Button */}
 						{isApprover && (
