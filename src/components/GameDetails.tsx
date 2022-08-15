@@ -47,7 +47,7 @@ const GameDetails = ({ data }: Props) => {
 	const {
 		isLoading,
 		approvers,
-		quorum = 1,
+		quorum = 2,
 		rejectQuorum = 1,
 		correctAnswer,
 		isApprovedOrRejected,
