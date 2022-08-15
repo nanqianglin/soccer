@@ -47,8 +47,8 @@ const GameDetails = ({ data }: Props) => {
 	const {
 		isLoading,
 		approvers,
-		quorum,
-		rejectQuorum,
+		quorum = 1,
+		rejectQuorum = 1,
 		correctAnswer,
 		isApprovedOrRejected,
 	} = useGameExtraInfo(data.id, address);
@@ -59,7 +59,8 @@ const GameDetails = ({ data }: Props) => {
 	const shouldPunish = rejectQuorum && gameStatus.rejecters.gte(rejectQuorum);
 
 	const renderGameOptions = useCallback(() => {
-		if (isOwner && !isRevealed) return;
+		if ((!isExpired && !isFinished && !isRevealed) || (isOwner && !isRevealed))
+			return;
 
 		return (
 			<RadioGroup mt={10}>
@@ -76,7 +77,7 @@ const GameDetails = ({ data }: Props) => {
 				))}
 			</RadioGroup>
 		);
-	}, [isOwner, isRevealed, options]);
+	}, [isExpired, isFinished, isOwner, isRevealed, options]);
 
 	const renderStatusSection = useCallback(() => {
 		// can play game

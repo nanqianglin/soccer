@@ -71,11 +71,6 @@ const CreateGameModal = ({ initialRef, finalRef, isOpen, onClose }: Props) => {
 			rateA: Number(values.rateA),
 			rateB: Number(values.rateB),
 		});
-
-		// setTimeout(() => {
-		// 	console.log(values);
-		// 	actions.setSubmitting(false);
-		// }, 1000);
 	};
 
 	return (

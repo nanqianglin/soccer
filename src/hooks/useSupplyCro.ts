@@ -5,24 +5,24 @@ import { ethers, BigNumber } from "ethers";
 import useContractInstance from "./useContractInstance";
 
 interface Data {
-  id: BigNumber,
-  isPunish?: boolean
+  amount: string,
 }
 
-export default function useFinishOrPunish() {
+export default function useSupplyCro() {
   const toast = useToast();
   const contract = useContractInstance(true);
 
-  async function approveOrReject(data: Data) {
+  async function supplyCro(data: Data) {
     if (!contract) return;
 
-    const id = data.id;
-    // if (data.isPunish) return await contract.punishDishonestOwner(id);
-    return await contract.finishGamble(id);
+    const amount = ethers.utils.parseEther(data.amount);
+    const id = BigNumber.from('0');
+
+    return await contract.supplyCro(id, amount);
   }
 
   return useMutation((data: Data) =>
-    approveOrReject(data), {
+    supplyCro(data), {
     onError: (err: Error & { reason: string, code: number }) => {
       toast({
         title: "Error!",

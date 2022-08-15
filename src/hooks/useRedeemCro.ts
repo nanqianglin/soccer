@@ -4,25 +4,22 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { ethers, BigNumber } from "ethers";
 import useContractInstance from "./useContractInstance";
 
-interface Data {
-  id: BigNumber,
-  isPunish?: boolean
-}
-
-export default function useFinishOrPunish() {
+export default function useRedeemCro() {
   const toast = useToast();
   const contract = useContractInstance(true);
 
-  async function approveOrReject(data: Data) {
+  async function redeemCro() {
     if (!contract) return;
 
-    const id = data.id;
-    // if (data.isPunish) return await contract.punishDishonestOwner(id);
-    return await contract.finishGamble(id);
+    const amount = ethers.utils.parseEther('10');
+    const id = BigNumber.from('0');
+    // return await contract.redeemCro(amount);
+    return await contract.redeemCro(id);
+    // return await contract.redeemCroTest();
   }
 
-  return useMutation((data: Data) =>
-    approveOrReject(data), {
+  return useMutation(() =>
+    redeemCro(), {
     onError: (err: Error & { reason: string, code: number }) => {
       toast({
         title: "Error!",

@@ -36,7 +36,6 @@ const RevealForm = ({ id, gameInfo }: Props) => {
 	const { isLoading, isSuccess, mutate } = useRevealGame();
 
 	const handleReveal = (values: Values, actions: FormikHelpers<Values>) => {
-		console.log(values, id);
 		mutate({
 			id,
 			option: values.option,

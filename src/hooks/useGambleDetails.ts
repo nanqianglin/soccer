@@ -10,7 +10,7 @@ export default function useGambleDetails(id: number) {
   }) {
     if (!contract) return;
     const [, _id] = queryKey
-    return await contract.gambleList(_id)
+    return await contract.getGambleList()
   }
 
   const result = useQuery(["getDetails", id], getDetails)

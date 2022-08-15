@@ -19,7 +19,7 @@ const Home: NextPage = () => {
 				Soccer Prizes Details
 			</Heading>
 			{isLoading && <Loading />}
-			{!isLoading && data && <GameDetails data={data} />}
+			{!isLoading && data && <GameDetails data={data[id]} />}
 		</>
 	);
 };

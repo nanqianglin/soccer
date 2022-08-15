@@ -1,5 +1,5 @@
 {
-  "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "address": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
   "abi": [
     {
       "inputs": [
@@ -12,6 +12,11 @@
           "internalType": "uint256",
           "name": "_quorum",
           "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_token",
+          "type": "address"
         }
       ],
       "stateMutability": "nonpayable",
@@ -115,7 +120,7 @@
         },
         {
           "indexed": false,
-          "internalType": "enum SoccerGambling.GambleOption",
+          "internalType": "enum GambleOption",
           "name": "option",
           "type": "uint8"
         },
@@ -127,25 +132,6 @@
         }
       ],
       "name": "PlayGamble",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        }
-      ],
-      "name": "PunishGambleOwner",
       "type": "event"
     },
     {
@@ -184,7 +170,7 @@
         },
         {
           "indexed": false,
-          "internalType": "enum SoccerGambling.GambleOption",
+          "internalType": "enum GambleOption",
           "name": "correctOption",
           "type": "uint8"
         },
@@ -197,35 +183,6 @@
       ],
       "name": "RevealGamble",
       "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "recipient",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "executor",
-          "type": "address"
-        }
-      ],
-      "name": "WithdrawTo",
-      "type": "event"
-    },
-    {
-      "stateMutability": "payable",
-      "type": "fallback"
     },
     {
       "inputs": [
@@ -248,29 +205,10 @@
           "type": "uint256"
         }
       ],
-      "name": "approvers",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
       "name": "correctAnswers",
       "outputs": [
         {
-          "internalType": "enum SoccerGambling.GambleOption",
+          "internalType": "enum GambleOption",
           "name": "",
           "type": "uint8"
         }
@@ -303,7 +241,7 @@
               "type": "string"
             }
           ],
-          "internalType": "struct SoccerGambling.Options",
+          "internalType": "struct Options",
           "name": "options",
           "type": "tuple"
         },
@@ -320,7 +258,7 @@
               "type": "uint256"
             }
           ],
-          "internalType": "struct SoccerGambling.Rate",
+          "internalType": "struct Rate",
           "name": "rate",
           "type": "tuple"
         },
@@ -349,123 +287,6 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "gambleList",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        },
-        {
-          "components": [
-            {
-              "internalType": "string",
-              "name": "title",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "description",
-              "type": "string"
-            },
-            {
-              "internalType": "address",
-              "name": "owner",
-              "type": "address"
-            },
-            {
-              "components": [
-                {
-                  "internalType": "string",
-                  "name": "optionA",
-                  "type": "string"
-                },
-                {
-                  "internalType": "string",
-                  "name": "optionB",
-                  "type": "string"
-                }
-              ],
-              "internalType": "struct SoccerGambling.Options",
-              "name": "options",
-              "type": "tuple"
-            },
-            {
-              "components": [
-                {
-                  "internalType": "uint256",
-                  "name": "rateA",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "rateB",
-                  "type": "uint256"
-                }
-              ],
-              "internalType": "struct SoccerGambling.Rate",
-              "name": "rate",
-              "type": "tuple"
-            },
-            {
-              "internalType": "uint256",
-              "name": "expiredAt",
-              "type": "uint256"
-            }
-          ],
-          "internalType": "struct SoccerGambling.GambleInfo",
-          "name": "gambleInfo",
-          "type": "tuple"
-        },
-        {
-          "components": [
-            {
-              "internalType": "bool",
-              "name": "isRevealed",
-              "type": "bool"
-            },
-            {
-              "internalType": "bool",
-              "name": "isFinished",
-              "type": "bool"
-            },
-            {
-              "internalType": "uint256",
-              "name": "totalAmount",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "filledAmount",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "approvers",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "rejecters",
-              "type": "uint256"
-            }
-          ],
-          "internalType": "struct SoccerGambling.GambleStatus",
-          "name": "gambleStatus",
-          "type": "tuple"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [],
       "name": "getApprovers",
       "outputs": [
@@ -479,24 +300,13 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        },
-        {
-          "internalType": "enum SoccerGambling.GambleOption",
-          "name": "correctOption",
-          "type": "uint8"
-        }
-      ],
-      "name": "getFailures",
+      "inputs": [],
+      "name": "getFactoryBalance",
       "outputs": [
         {
-          "internalType": "address[]",
-          "name": "",
-          "type": "address[]"
+          "internalType": "uint256",
+          "name": "balance",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -543,7 +353,7 @@
                       "type": "string"
                     }
                   ],
-                  "internalType": "struct SoccerGambling.Options",
+                  "internalType": "struct Options",
                   "name": "options",
                   "type": "tuple"
                 },
@@ -560,7 +370,7 @@
                       "type": "uint256"
                     }
                   ],
-                  "internalType": "struct SoccerGambling.Rate",
+                  "internalType": "struct Rate",
                   "name": "rate",
                   "type": "tuple"
                 },
@@ -570,7 +380,7 @@
                   "type": "uint256"
                 }
               ],
-              "internalType": "struct SoccerGambling.GambleInfo",
+              "internalType": "struct GambleInfo",
               "name": "gambleInfo",
               "type": "tuple"
             },
@@ -607,38 +417,14 @@
                   "type": "uint256"
                 }
               ],
-              "internalType": "struct SoccerGambling.GambleStatus",
+              "internalType": "struct GambleStatus",
               "name": "gambleStatus",
               "type": "tuple"
             }
           ],
-          "internalType": "struct SoccerGambling.Gamble[]",
+          "internalType": "struct Gamble[]",
           "name": "",
           "type": "tuple[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        },
-        {
-          "internalType": "enum SoccerGambling.GambleOption",
-          "name": "correctOption",
-          "type": "uint8"
-        }
-      ],
-      "name": "getWinners",
-      "outputs": [
-        {
-          "internalType": "address[]",
-          "name": "",
-          "type": "address[]"
         }
       ],
       "stateMutability": "view",
@@ -669,37 +455,12 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "isApprover",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        }
-      ],
-      "name": "leftFilledAmount",
+      "inputs": [],
+      "name": "minCro",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "leftAmount",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -714,7 +475,7 @@
           "type": "uint256"
         },
         {
-          "internalType": "enum SoccerGambling.GambleOption",
+          "internalType": "enum GambleOption",
           "name": "option",
           "type": "uint8"
         }
@@ -732,48 +493,9 @@
           "type": "uint256"
         }
       ],
-      "name": "punishDishonestOwner",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "quorum",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        }
-      ],
       "name": "rejectGamble",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "rejectQuorum",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -784,7 +506,7 @@
           "type": "uint256"
         },
         {
-          "internalType": "enum SoccerGambling.GambleOption",
+          "internalType": "enum GambleOption",
           "name": "correctOption",
           "type": "uint8"
         }
@@ -821,36 +543,7 @@
           "type": "uint256"
         },
         {
-          "internalType": "enum SoccerGambling.GambleOption",
-          "name": "",
-          "type": "uint8"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "userGambleAmount",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        },
-        {
-          "internalType": "enum SoccerGambling.GambleOption",
+          "internalType": "enum GambleOption",
           "name": "",
           "type": "uint8"
         },
@@ -888,10 +581,6 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "stateMutability": "payable",
-      "type": "receive"
     }
   ]
 }
