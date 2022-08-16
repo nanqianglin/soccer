@@ -10,6 +10,7 @@ import React from "react";
 import CreateGameButton from "components/CreateGame/CreateGameButton";
 import { LinkBox, Button, Avatar, AvatarBadge, Flex } from "@chakra-ui/react";
 import NextLink from "next/link";
+import DemoTools from "components/DemoTools";
 
 const Home: NextPage = () => {
 	const { address } = useAccount();
@@ -21,9 +22,10 @@ const Home: NextPage = () => {
 			<Head>
 				<title>Soccer</title>
 			</Head>
-			<LinkBox textAlign='right' width='100%'>
+			<LinkBox width='100%' sx={{ display: 'flex', justifyContent: 'space-between' }}>
+				<DemoTools />
 				<NextLink href='withdraw' passHref>
-					<Box width='100%'>
+					<Box>
 						{/* <Avatar mt={-1} mr={4}>
 							<AvatarBadge boxSize='1.25em' bg='green.500' />
 						</Avatar> */}

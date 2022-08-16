@@ -13,6 +13,7 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { ethers } from "ethers";
+import useBlockTimestamp from "hooks/useBlockTimestamp";
 import useGameExtraInfo from "hooks/useGameExtraInfo";
 import moment from "moment";
 import React, { useCallback } from "react";
@@ -28,6 +29,7 @@ interface Props {
 
 const GameDetails = ({ data }: Props) => {
 	const { address } = useAccount();
+	const { data: timestamp } = useBlockTimestamp();
 
 	const gameInfo = data.gambleInfo;
 	const gameStatus = data.gambleStatus;
@@ -39,7 +41,8 @@ const GameDetails = ({ data }: Props) => {
 	}));
 
 	const expiredAt = moment(gameInfo.expiredAt.toNumber() * 1000);
-	const isExpired = expiredAt.isBefore(moment());
+	const blockNowTime = moment(timestamp * 1000);
+	const isExpired = expiredAt.isBefore(blockNowTime);
 	const isRevealed = gameStatus.isRevealed;
 	const isFinished = gameStatus.isFinished;
 	const isOwner = gameInfo.owner === address;
@@ -98,7 +101,9 @@ const GameDetails = ({ data }: Props) => {
 								This game is expired and waiting for reveal.
 							</Alert>
 							<Text fontSize='sm' mt={4} color='red'>
-								This game is expired at {expiredAt.format("MMM DD, YYYY")}
+								This game is expired at {expiredAt.format("MMM DD, YYYY")}.
+								<br />
+								Now the time of the block chain is {blockNowTime.format("MMM DD, YYYY")}
 							</Text>
 						</>
 					)}
@@ -165,6 +170,8 @@ const GameDetails = ({ data }: Props) => {
 		correctAnswer,
 		data.id,
 		gameInfo,
+		expiredAt,
+		blockNowTime,
 		isApprovedOrRejected,
 		isApprover,
 		isExpired,
@@ -186,7 +193,9 @@ const GameDetails = ({ data }: Props) => {
 
 			{!isExpired && (
 				<Text fontSize='sm' mt={4} color='red'>
-					This game is expired at {expiredAt.format("MMM DD, YYYY")}
+					This game is expired at {expiredAt.format("MMM DD, YYYY")}.
+					<br />
+					Now the time of the block chain is {blockNowTime.format("MMM DD, YYYY")}
 				</Text>
 			)}
 		</Box>
