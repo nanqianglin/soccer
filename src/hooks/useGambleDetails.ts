@@ -8,14 +8,15 @@ export default function useGambleDetails(id: number) {
   async function getDetails({ queryKey }: {
     queryKey: [string, number]
   }) {
-    if (!contract) return;
     const [, _id] = queryKey
+    if (!contract || _id === NaN) return;
     return await contract.getGambleList()
   }
 
   const result = useQuery(["getDetails", id], getDetails)
 
   return {
-    ...result
+    ...result,
+    data: result?.data?.[id]
   };
 }

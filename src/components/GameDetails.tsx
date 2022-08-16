@@ -92,10 +92,15 @@ const GameDetails = ({ data }: Props) => {
 					{isOwner ? (
 						<RevealForm id={data.id} gameInfo={gameInfo} />
 					) : (
-						<Alert status='warning'>
-							<AlertIcon />
-							This game is expired and waiting for reveal.
-						</Alert>
+						<>
+							<Alert status='warning'>
+								<AlertIcon />
+								This game is expired and waiting for reveal.
+							</Alert>
+							<Text fontSize='sm' mt={4} color='red'>
+								This game is expired at {expiredAt.format("MMM DD, YYYY")}
+							</Text>
+						</>
 					)}
 				</Box>
 			);
