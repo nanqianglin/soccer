@@ -34,14 +34,14 @@ const PlayForm = ({ id, gameInfo }: Props) => {
 
 	const toast = useToast();
 	useEventListener("PlayGamble", () => {
-		toast({
-			title: "Congratulations!",
-			description: "You have play the game successfully!",
-			status: "success",
-			duration: 3000,
-			isClosable: true,
-			position: "top",
-		});
+		// toast({
+		// 	title: "Congratulations!",
+		// 	description: "You have play the game successfully!",
+		// 	status: "success",
+		// 	duration: 3000,
+		// 	isClosable: true,
+		// 	position: "top",
+		// });
 		// resetForm
 		ref?.current?.();
 	});
